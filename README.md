@@ -8,4 +8,4 @@ Developer: Niraj Kafle
 
 Contact: kafleniraj@gmail.com
 
-App preview: https://ibb.co/k2TtgZd
+
