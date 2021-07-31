@@ -1,0 +1,134 @@
+---FIREBASE AUTHENTICATION---
+
+-To initialize firebase authentication
+const auth = firebase.auth();
+
+
+-To initialize firestore database
+const db = firebase.firestore();
+
+
+-To signup user using email and password
+auth.createUserWithEmailAndPassword(email, password).then(cred => {
+    console.log(cred);
+});
+
+
+-To logout/signout user
+auth.signOut().then(()=> {
+    console.log('User signned out!');
+});
+
+
+-To login.signup user
+auth.signInWithEmailAndPassword(email, password).then(cred => {
+    console.log(cred);
+});
+
+
+-To check user is logged in or logged out, check user status
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    console.log("logged in ", user);
+  } else {
+    console.log("logged out");
+  }
+});
+
+
+---FIREBASE SECURITY RULES - FIRESTORE---
+
+-To setup firebase rule to only allow read and write to the uses who are authenticated
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  //match any doc in guide collection
+    match /guides/{guideId}{
+    allow read: if request.auth.uid != null;
+    //only admins can add new guides
+    allow write: if request.auth.token.admin == true;
+    }
+    
+    //match logged in user doc in users collection
+    match /users/{userId} {
+    //when we are authenticated we can create any record 
+    allow create : if request.auth.uid != null;
+    //when we are authenticated we can read our own record
+    allow read: if request.auth.uid == userId;
+    }
+  }
+}
+
+
+---FIREBASE FIRESTORE---
+
+-To store data of the user to firestore with uid as document id
+db.collection("users").doc(cred.user.uid).set({
+  bio: bio,
+});
+
+
+---FIREBASE CLOUD FUNCTIONS---
+
+-To install cloud functions
+npm i firebase-tools -g
+
+-To initialize firebase functions (CMD)
+firebase init functions
+
+
+-To initialize firebase functions (HTML)
+const functions = firebase.functions();
+
+
+-To deploy functions
+firebase deploy --only functions
+
+
+-To create a function
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+admin.initializeApp();
+
+exports.addAdminRole = functions.https.onCall((data, context) => {
+  return admin
+    .auth()
+    .getUserByEmail(data.email)
+    .then((user) => {
+      return admin.auth().setCustomUserClaims(user.uid, {
+        admin: true,
+      });
+    })
+    .then(() => {
+      return {
+        message: `Success, ${data.email} has been made an admin`,
+      };
+    })
+    .catch((err) => {
+      return err;
+    });
+});
+
+
+
+-To call and envoke the created function
+const addAdminRole = functions.httpsCallable("addAdminRole");
+
+addAdminRole({ email: adminEmail }).then((result) => {
+  console.log(result);
+});
+
+
+-To see if the user is admin or not while looggin in 
+user.getIdTokenResult().then(idTokenResult => {
+  //If user is admin user.admin = true
+  user.admin = idTokenResult.claims.admin;
+  //Change ui accordingly
+  setupUI(user);
+})
+
+
+---FIREBASE SECURITY RULES - CLOUD FUNCTIONS---
+if (context.auth.token.admin !== true){
+ return {error: 'Only admins can add other admins'}
+}
