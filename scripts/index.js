@@ -69,7 +69,7 @@ const setupGuide = (data) => {
       guideList.innerHTML = html;
     });
   } else {
-    guideList.innerHTML = `<h5 style="text-align: centre;">Login to view guides! <h5>`;
+    guideList.innerHTML = `<h5 style="text-align: center;">Login to view guides!</h5>`;
   }
 };
 

@@ -2,6 +2,8 @@
 
 A vanilla JS game guide site with email/password login and an admin role, backed by Firebase.
 
+![Screenshot](docs/screenshot.png)
+
 ## What it does
 
 - Users sign up and log in with email and password (Firebase Authentication)

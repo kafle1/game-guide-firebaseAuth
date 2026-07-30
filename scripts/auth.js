@@ -7,7 +7,7 @@ adminForm.addEventListener("submit", (e) => {
 
   addAdminRole({ email: adminEmail }).then((result) => {
     M.toast({
-      html: `${result.message}`,
+      html: `${result.data.message}`,
       classes: "rounded green darken-1 white-color",
     });
   });
