@@ -1,11 +1,34 @@
-Project Name: Cafe Firestore
+# Game Guide (Firebase Auth)
 
-Technology Used: HTML, CSS, JS (Vanilla), Firebase
+A vanilla JS game guide site with email/password login and an admin role, backed by Firebase.
 
-Description: This is a game guide site which uses firebase as back end. Users can come in, login with email and see the guides. Admin can create guides and make other admins. Firebase firestore, firebase auth and firebase cloud function is used in this project.
+## What it does
 
-Developer: Niraj Kafle
+- Users sign up and log in with email and password (Firebase Authentication)
+- Logged-in users can browse guides, which sync in real time from Firestore
+- Admins can create new guides and promote other users to admin, via a callable
+  Firebase Cloud Function (`addAdminRole`) that sets a custom `admin` claim
 
-Contact: kafleniraj@gmail.com
+## Tech stack
 
+- HTML, CSS, vanilla JavaScript, Materialize CSS
+- Firebase Authentication, Firestore, and Cloud Functions
 
+## How to run
+
+The front end (`index.html`, `scripts/`) needs no build step — open `index.html` in a browser
+or serve the folder with any static server. It talks to the Firebase project configured in
+`index.html`.
+
+To work on the Cloud Function:
+
+```bash
+cd functions
+npm install
+npm run serve   # run functions in the Firebase emulator
+npm run deploy   # deploy to Firebase
+```
+
+## License
+
+MIT — see [LICENSE](LICENSE).
