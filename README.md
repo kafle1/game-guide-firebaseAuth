@@ -18,7 +18,7 @@ A vanilla JS game guide site with email/password login and an admin role, backed
 
 ## How to run
 
-The front end (`index.html`, `scripts/`) needs no build step — open `index.html` in a browser
+The front end (`index.html`, `scripts/`) needs no build step - open `index.html` in a browser
 or serve the folder with any static server. It talks to the Firebase project configured in
 `index.html`.
 
@@ -33,4 +33,4 @@ npm run deploy   # deploy to Firebase
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).
